@@ -139,6 +139,8 @@ function brew_cask_install() {
     brew install --cask istat-menus
     #brew install --cask 1password
     #brew install --cask ccleaner
+    brew install --cask telegram
+    brew install --cask authy
 
     # Fonts
     brew install --cask font-fira-code
