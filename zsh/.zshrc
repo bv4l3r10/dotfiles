@@ -5,6 +5,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Source KUBE PS1
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
 # Customize to your needs ...
 DISABLE_AUTO_UPDATE=false
 DISABLE_UPDATE_PROMPT=true
@@ -84,11 +88,17 @@ complete -o nospace -C ${terraform}/bin/terraform terraform
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/xrl/dotfiles/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/xrl/dotfiles/node_modules/tabtab/.completions/serverless.zsh
+[[ -f /Users/bmv/dotfiles/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/bmv/dotfiles/node_modules/tabtab/.completions/serverless.zsh
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/xrl/dotfiles/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/xrl/dotfiles/node_modules/tabtab/.completions/sls.zsh
+[[ -f /Users/bmv/dotfiles/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/bmv/dotfiles/node_modules/tabtab/.completions/sls.zsh
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/xrl/dotfiles/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/xrl/dotfiles/node_modules/tabtab/.completions/slss.zsh
+[[ -f /Users/bmv/dotfiles/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/bmv/dotfiles/node_modules/tabtab/.completions/slss.zsh
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/bmv/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bmv/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/bmv/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bmv/google-cloud-sdk/completion.zsh.inc'; fi
