@@ -5,10 +5,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Source KUBE PS1
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
-PS1='$(kube_ps1)'$PS1
-
 # Customize to your needs ...
 DISABLE_AUTO_UPDATE=false
 DISABLE_UPDATE_PROMPT=true
