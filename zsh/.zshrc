@@ -11,32 +11,51 @@ DISABLE_UPDATE_PROMPT=true
 
 # Change random MAC address
 function change_mac() {
-    local mac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
-    sudo ifconfig en0 ether $mac
-    sudo ifconfig en0 down
-    sudo ifconfig en0 up
-    echo "MAC address: $mac"
+  local mac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+  sudo ifconfig en0 ether $mac
+  sudo ifconfig en0 down
+  sudo ifconfig en0 up
+  echo "MAC address: $mac"
 }
 
 # Terraform alias in order to append the | landscape command prettier
 alias terraform="_terraform"
 
 function prompt_terraform() {
-    if [[ -n *.tf(#qN) ]]; then
-        WORKSPACE=$("terraform" workspace show 2> /dev/null) || return
-        "$1_prompt_segment" "$0" "$2" "$DEFAULT_COLOR" "red" "tf:$WORKSPACE"
-    fi
+  if [[ -n *.tf(#qN) ]]; then
+    WORKSPACE=$("terraform" workspace show 2> /dev/null) || return
+    "$1_prompt_segment" "$0" "$2" "$DEFAULT_COLOR" "red" "tf:$WORKSPACE"
+  fi
 }
 
 function _terraform() {
-    "terraform" "$@"
-    # if [[ "$@" =~ "plan" ]] || [[ "$@" =~ "apply" ]]; then
-    #     "terraform" "$@" | landscape
-    # else
-    #     "terraform" "$@"
-    # fi
+  "terraform" "$@"
+  # if [[ "$@" =~ "plan" ]] || [[ "$@" =~ "apply" ]]; then
+  #     "terraform" "$@" | landscape
+  # else
+  #     "terraform" "$@"
+  # fi
 }
 
+# Onna tool
+alias onna="${HOME}/.ssh/onna/./onna.sh"
+
+# KUBE-PS1
+KUBE_PS1_BG_COLOR=null
+
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
+function zsh_kubens() {
+  echo -n "$(kube_ps1)"
+}
+
+# KUBECTL
+alias k=kubectl
+alias kx=kubectx
+alias kpo="k get pods"
+
+#alias helm=/usr/local/bin/helm
 # Find libxml2 location path
 libxml2=$(brew info libxml2 | grep Cellar | sed -e 's/ (.*//')
 
@@ -52,7 +71,6 @@ export NVM_DIR="$HOME/.nvm"
 # PATH
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
-export PATH="$HOME/.GIS-lm-build/bin:$PATH"
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
@@ -82,6 +100,9 @@ if alias lm > /dev/null; then unalias lm; fi
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C ${terraform}/bin/terraform terraform
 
+# Helm
+export PATH="/usr/local/opt/helm@2/bin:$PATH"
+
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f /Users/bmv/dotfiles/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/bmv/dotfiles/node_modules/tabtab/.completions/serverless.zsh
@@ -98,3 +119,6 @@ if [ -f '/Users/bmv/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bmv/google-
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/bmv/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bmv/google-cloud-sdk/completion.zsh.inc'; fi
+
+# DEPLOY
+export ONNA_DEPLOY_CLUSTERS_CONF=~/onna/charts/clusters

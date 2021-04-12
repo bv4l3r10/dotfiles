@@ -127,7 +127,8 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:prompt' theme 'powerlevel9k'
 
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs terraform)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs terraform)
+POWERLEVEL9K_CUSTOM_SERVICE="zsh_kubens"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs terraform custom_service)
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status ssh time)
